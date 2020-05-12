@@ -2,6 +2,7 @@ class LineItemsController < ApplicationController
   include CurrentCart
   before_action :set_cart, only: [:create]
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
+  before_action :decrease_line_item, only: [:destroy]
 
   # GET /line_items
   # GET /line_items.json
@@ -75,5 +76,15 @@ class LineItemsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def line_item_params
       params.require(:line_item).permit(:product_id)
+    end
+
+    def decrease_line_item
+      if @line_item.quantity >= 2
+        @line_item.quantity = @line_item.quantity - 1
+        @line_item.save
+        respond_to do |format|
+          format.html { redirect_to store_index_url }
+        end
+      end
     end
 end
