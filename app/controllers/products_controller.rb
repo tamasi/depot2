@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
+  include CurrentCart
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-
+  before_action :visit_index_count, only: [:update]
   # GET /products
   # GET /products.json
   def index
