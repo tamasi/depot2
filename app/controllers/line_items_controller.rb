@@ -3,6 +3,7 @@ class LineItemsController < ApplicationController
   before_action :set_cart, :reset_visit_counter, only: [:create]
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
   before_action :decrease_line_item, only: [:destroy]
+  skip_before_action :authorize, only: :create
 
   # GET /line_items
   # GET /line_items.json
